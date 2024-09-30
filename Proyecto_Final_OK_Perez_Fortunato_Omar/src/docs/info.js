@@ -8,7 +8,7 @@ export const info = {
         },
         servers: [
             {
-                url: "https://proyectofinalbackendperezfortunatoomar.onrender.com",
+                url: "http://localhost:8080",    
             }
             
         ],
