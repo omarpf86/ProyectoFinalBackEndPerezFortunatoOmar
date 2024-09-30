@@ -52,12 +52,14 @@ const storeConfig = {
     resave: true,
     saveUninitialized: true,
     cookie: {
-        maxAge: 300000,   
+        maxAge: 300000,
+        secure: true,  
+        sameSite: 'none' 
     }
 };
 
 app.use(cors({
-    origin: '*',  
+    origin: 'https://proyectofinalbackendperezfortunatoomar.onrender.com',  
     credentials: true  
 }))
 
