@@ -55,6 +55,16 @@ export const update = async (id,owner,role,email,obj) => {
   }
 };
 
+export const updateStock = async (id,  obj) => {
+  try {
+        return await prodDao.update(id, obj)
+  }
+  catch (error) {
+  throw new Error(error);
+  }
+};
+
+
 export const remove = async (id,owner,email,role) => {
   try {
     let user = "";
