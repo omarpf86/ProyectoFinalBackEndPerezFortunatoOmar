@@ -1,10 +1,9 @@
 Proyecto Final: Aplicación BackEnd.
- 
+(Se ejecuta desde la terminal de visual studio) 
 El proyecto desarrollado consiste en el desarrollo backend de una aplicación para un ecommerce.
 En la terminal el servidor se levanta usando: node src/server.js prod mongo.
 El enlace: http://localhost:8080/docs/ lo dirige a Swagger donde encontrará los endpoints solicitados.
-También puede acceder al registro para un usuario desde : http://localhost:8080/api/views/register
-Y al login desde: http://localhost:8080/api/views/login
+
 
 Además, adjunto los datos de los archivos.env
 
