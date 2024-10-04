@@ -42,8 +42,7 @@ export const create = async (req, res, next) => {
         role == "premium" ? owner = req.user.email : owner = "admin"
         const newProd = await service.create({ ...req.body, owner });
         if (!newProd) return httpResponse.BadRequest(res,newProd)
-        else return res.redirect(`/homepage?message=product created`)
-        //res.json(newProd);
+        else return httpResponse.Ok(res, newProd)
     } catch (error) {
         next(error.message);
     }
