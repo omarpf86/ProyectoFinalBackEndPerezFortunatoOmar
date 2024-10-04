@@ -6,15 +6,17 @@ const httpResponse = new HttpResponse()
 
 export const registerPassportLocal = async (req, res, next) => {
     try {
-        console.log(req.session.passport.user)
-        if (!req.session.passport.user) {
-            return res.redirect(`/api/views/login?message=The user already existe`); 
-        } else {
-            return res.redirect(`/api/views/login?message=The user was registered`); 
-        } 
+        let id = null;
+        if (req.session.passport && req.session.passport.user) id = req.session.passport.user;
+        const user = await service.getUserById(id); 
+        if (!user) {
+            httpResponse.NotFound(res, user)
+        }    
+        else return httpResponse.Ok(res, user) 
     } catch (error) {
         next(error);
     }
+           
 }; 
 
 
@@ -23,14 +25,8 @@ export const loginPassportLocal = async (req, res) => {
         let id = null;
         if (req.session.passport && req.session.passport.user) id = req.session.passport.user;
         const user = await service.getUserById(id);  
-        //console.log("para el login", user)
-        if (user && user.role == "admin") {
-            return res.redirect(`/homepage`);
-        }
-        else if (user) {
-            return res.redirect(`/api/views/cart?cartId=${user.cid}&message=Welcome to the page`);     
-              }
-        else { res.redirect(`/api/views/login?message=Status(401)-User not auhorized`) }
+        if (!user) return httpResponse.Unauthorized(res, user)
+        else return httpResponse.Ok(res, user)
     } catch (error) {
         throw new Error(error);
     }
