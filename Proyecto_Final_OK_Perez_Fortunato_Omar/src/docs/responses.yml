@@ -253,7 +253,7 @@ components:
               cart:  
                 type: Object Id 
                 description: Identificación del carrito asociado al usuario.
-      current:
+      currentRegisterLogin:
         type: object
         properties:
           status: 
@@ -283,6 +283,60 @@ components:
               cid:
                 type: string
                 description: Id del carrito asociado al usuario.
+      adminCurrentRegisterLogin:
+        type: object
+        properties:
+          status: 
+            type: number
+            description: 200
+          message:
+            type: string
+            description:  "Operation carried out successfully"
+          data:  
+            type: object
+            properties: 
+              first_name:
+                type: string
+                description: Nombre del usuaro.
+              last_name:
+                type: string
+                description: Apellido del usuario.
+              email:
+                type: string
+                description: Email del usuario.  
+              age:
+                type: string
+                description: Email del usuario. 
+              password:
+                type: string
+                description: Contraseña.
+              role:
+                type: string
+                description: Rol del usuario.
+              cart:
+                type: object
+                properties: 
+                  id:
+                    type: string
+                    description: Identificación del carrito asociado al usuario 
+                  products:
+                    type: array
+                    description: Lista de productos en el carrito.
+                    items:
+                      type: object
+                      properties:
+                          product:
+                            type: string
+                            description: ID del producto.
+                          quantity:
+                            type: integer
+                            description: Cantidad del producto.  
+              lastConnection:
+                type: date
+                description: Fecha y hora de la última conexión del usuario. 
+              isGithub: 
+                type: boolean
+                description: Adopta el valor true o false considerando si el usuario se registra o no con gitHub. 
       getAll:
         type: object
         properties:
@@ -328,6 +382,20 @@ components:
               amount:
                 type: number
                 description: Monto de la compra.
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Nombre del producto comprado.
+                    selectedQuantity::
+                        type: number
+                        description: Cantidad del producto comprado. 
+                    price:
+                      type: number
+                      description: Precio del producto comprado.     
               purchaser:
                 type: string
                 description: email del comprador
@@ -358,4 +426,16 @@ components:
             description: "Bad Request"
           data:
             type: string
-            description: Dato o parametro que genera el error.                                    
+            description: Dato o parametro que genera el error. 
+      error_401: 
+        type: object
+        properties:
+          status:
+            type: number
+            description: 401 
+          message:
+            type: string
+            description: "The request requires user authentication."
+          data:
+            type: string
+            description: Dato o parametro que genera el error.                                                                         
