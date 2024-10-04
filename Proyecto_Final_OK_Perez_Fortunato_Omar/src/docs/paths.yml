@@ -123,13 +123,19 @@ paths:
               $ref: '#/components/parameters/schemas/user'
         required: true
       responses:
-        302:
-          description: Redirección a la página de login.
-          headers:
-            Location:
-              description: /api/users/login
+        200:
+          description: Registro exitoso del usuario.
+          content:
+            application/json:
               schema:
-                type: string          
+                type: array
+                $ref: '#/components/schemas/users/currentRegisterLogin'       
+        404:
+          description: Perfiles no encontrados.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error/error_404'         
   /api/users/login:
     post:  
       tags:
@@ -142,20 +148,24 @@ paths:
               $ref: '#/components/parameters/schemas/login'
         required: true
       responses:
-        302:
-          description: Redirección según el rol del usuario.
-          headers:
-            Location:
-              description:  | 
-                Dependiendo del rol, el usuario es redirigido a una de las siguientes páginas:
-                - `/homepage` (para admin)
-                - `/api/views/cart` (para otros roles).
+        200:
+          description: El usuario se logueo correctamente.
+          content:
+            application/json:
               schema:
-                type: string   
+                $ref: '#/components/schemas/users/currentRegisterLogin'
+        201:
+          description: El administrador se logueo correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users/adminCurrentRegisterLogin'         
         401:
-          description: "Si el usuario o la contraseña es incorrecta el usuario es redirigido a la página de login: http://localhost:8080/api/views/login "
-          schema:
-            type: string 
+          description: No autorizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error/error_401'     
   /api/users:
     get:
       tags:
@@ -163,14 +173,14 @@ paths:
       summary: Permite obtener todos los usuarios registrados.           
       responses:
         200:
-          description: Se obtuvo todo los carritos de la base de datos.
+          description: Se obtuvo todo los usuarios de la base de datos.
           content:
             application/json:
               schema:
-                type: array.
+                type: array
                 $ref: '#/components/schemas/users/getAll'
         404:
-          description: Perfiles no encontrados.
+          description: Perfil no encontrados.
           content:
             application/json:
               schema:
@@ -179,7 +189,7 @@ paths:
     put:
       tags:
       - user
-      summary: Cambia el rol del usuario.
+      summary: Cambia el rol del usuario a premium.
       parameters:
         - in: path
           name: id
@@ -189,7 +199,7 @@ paths:
             type: string 
       responses:
         200:
-          description: Producto actualizado.
+          description: Cambio de rol realizado correctamente.
           content:
             application/json:
               schema:
@@ -224,7 +234,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/users/current' 
+                $ref: '#/components/schemas/users/currentRegisterLogin' 
         404:
           description: Perfil no encontrado
           content:
@@ -343,7 +353,7 @@ paths:
         - in: path
           name: cid
           required: true
-          description: id del producto a buscar
+          description: id del carrito a buscar.
           schema:
             type: string             
       responses:
@@ -546,3 +556,4 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error/error_404'                       
+             
